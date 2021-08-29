@@ -1,25 +1,41 @@
 import logo from './logo.svg';
 import './App.css';
+import './App-media.css';
+import {connect} from "react-redux";
+import {getPosts as getPostAction, setFilterPosts as setFilterPostsAction} from "./redux/modules/posts";
+import { Filter, Post, Header, SearchBar } from "./components/";
+import {useEffect} from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function App({posts, getPosts, setFilterPosts}) {
+
+    useEffect(()=>{
+        getPosts();
+
+        console.log('sadasdasd', setFilterPosts);
+    }, [])
+
+    console.log(posts);
+
+    return (
+        <div className="App">
+            <Header>
+                <SearchBar />
+                <Filter filterChange={ setFilterPosts } />
+            </Header>
+            <div className={'posts'}>
+                {
+                    posts.map(item => <Post key={ item.email } { ...item }/>)
+                }
+            </div>
+
+        </div>
+    );
 }
 
-export default App;
+export default connect(
+    ({posts}) => ({...posts}),
+    {
+        getPosts: getPostAction,
+        setFilterPosts: setFilterPostsAction
+    }
+)(App);

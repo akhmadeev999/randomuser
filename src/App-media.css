@@ -1,0 +1,11 @@
+@media screen and (max-width: 1199px){
+    .posts__item{
+        width: calc((100% - 40px) / 2);
+    }
+}
+
+@media screen and (max-width: 767px){
+    .posts__item{
+        width: calc(100% - 20px);
+    }
+}
